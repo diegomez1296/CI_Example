@@ -7,7 +7,7 @@ jobs: # a collection of steps
     docker: # run the steps with Docker
       - image: circleci/openjdk:8u171-jdk # ...with this image as the primary container; this is where all `steps` will run
         enviroment:
-          JDBC_DATABASE_URL: jdbc:postgressql://127.0.0.1/testdb
+          JDBC_DATABASE_URL: jdbc:postgresql://127.0.0.1/testdb
           JDBC_DATABASE_USERNAME: root
           JDBC_DATABASE_PASSWORD: root
 
