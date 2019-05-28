@@ -21,6 +21,6 @@ public class HomeApi {
         return dogRepo.save(new Dog("Dog1"));
     }
 
-    @GetMapping
+    @GetMapping("/getAll")
     public Iterable<Dog> getAll() {return dogRepo.findAll();}
 }
