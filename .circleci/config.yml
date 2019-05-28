@@ -1,6 +1,6 @@
 version: 2 # use CircleCI 2.0
 jobs: # a collection of steps
-  build: # runs not using Workflows must have a `build` job as entry point
+  superbuild: # runs not using Workflows must have a `build` job as entry point
 
     working_directory: ~/CI_Example # directory where steps will run
 
@@ -13,3 +13,24 @@ jobs: # a collection of steps
 
       - run: mvn dependency:go-offline # gets the project dependencies
       - run: mvn test
+
+  superdeploy:
+    docker:
+    - image: buildpack-deps:trusty
+
+    steps:
+    - checkout
+    - run:
+        name: Deploying app on heroku
+        command: |
+          git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - superbuild
+      - superdeploy:
+          requires:
+          - superbuild
